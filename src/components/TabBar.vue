@@ -9,7 +9,7 @@
       v-model="active"
     >
       <van-tabbar-item icon="wap-home" to="/">首页</van-tabbar-item>
-      <van-tabbar-item icon="shop" to="/about">分类</van-tabbar-item>
+      <van-tabbar-item icon="smile" to="/about">智能佩奇</van-tabbar-item>
       <van-tabbar-item icon="manager" to="/profile">我的</van-tabbar-item>
     </van-tabbar>
   </div>

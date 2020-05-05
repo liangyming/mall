@@ -10,13 +10,14 @@ import { Search } from 'vant';
 import { Swipe, SwipeItem } from 'vant';
 import { Grid, GridItem } from 'vant';
 import { DropdownMenu, DropdownItem } from 'vant';
-import { Sticky } from 'vant';
 import { Card } from 'vant';
 import { Tag } from 'vant';
+import { Cell, CellGroup } from 'vant';
 
+Vue.use(Cell);
+Vue.use(CellGroup);
 Vue.use(Tag);
 Vue.use(Card);
-Vue.use(Sticky);
 Vue.use(DropdownMenu);
 Vue.use(DropdownItem);
 Vue.use(Grid);

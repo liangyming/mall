@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <router-view class="view"></router-view>
-    <tab-bar></tab-bar>
+    <tab-bar class="tb"></tab-bar>
   </div>
 </template>
 
@@ -19,7 +19,15 @@ export default {
 <style>
 @import "./assets/css/base.css";
 
+#app {
+  position: relative;
+}
 .view {
   margin-bottom: 50px;
+}
+.tb {
+  display: flex;
+  position: absolute;
+  bottom: 0px;
 }
 </style>

@@ -31,7 +31,8 @@ export default {
 .nav-bar {
   font-weight: 600;
   color: white;
-  background-color: #ff8198;
+  background-color: #4fc08d;
+  margin-bottom: 1px;
 }
 
 .line {

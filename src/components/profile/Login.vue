@@ -35,7 +35,7 @@ export default {
   width: 100%;
   height: 90px;
   padding: 0 20px;
-  background-color: #ff8198;
+  background-color: #4fc08d;
 }
 
 .user-pic {
