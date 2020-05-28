@@ -22,7 +22,7 @@
         <button id="bt1" @click="send">确认</button>
       </div>
       <div class="button" v-else>
-        <recorder @music="audioplay"></recorder>
+        <recorder @music="recorderplay"></recorder>
       </div>
     </div>
   </div>
@@ -66,34 +66,33 @@ export default {
     //发送文字信息到后台
     send() {
       request({
-        url: '/home/multidata',
-        data: this.inputing
-      }).then(res => {
-        // this.text = res.text;
-        // console.log(res);
-      }).catch(err => {
-        console.log(err);
-      });
-      var test = this.inputing;
-      this.inputing = '';
-      if (test == '你好') {
-        setTimeout(() => {
-          this.src = require('@/assets/img/hellow.mp3');
-          this.text = '你好呀，小朋友!';
-          this.autoplay();
-        }, 1000)
-      } else if(test == 'computer') {
-        setTimeout(() => {
-          this.src = require('@/assets/img/computer.mp3');
-          this.text = '翻译结果：'+'计算机';
-          this.autoplay();
-        }, 1000)
-      }
+        method: 'post',
+        url: '/about1',
+        data: {'text': this.inputing},
+        responseType: 'blob'    //二进制返回格式
+      }).then(res1 => {
+        const myBlob = new Blob([res1.data],{type: 'wav/audio'})
+        const r_url = window.URL.createObjectURL(myBlob)
+        this.src = r_url
+        request({
+          method: 'post',
+          url: '/about2',
+        }).then(res2 => {
+          this.text = res2.data
+        }).catch( err2 => {
+          alert(err2)
+        })
+        this.autoplay()
+      }).catch(err1 => {
+        alert(err1)
+      })
     },
     //从子组件请求res数据，并播放
-    audioplay() {
-      this.src = require('@/assets/img/computer.mp3');
-      this.text = '翻译结果：'+'计算机';
+    recorderplay(voice, suc) {
+      const myBlob = new Blob([voice],{type: 'wav/audio'})
+      const r_url = window.URL.createObjectURL(myBlob)
+      this.src = r_url
+      this.text = suc
       this.autoplay();
     }
   },
