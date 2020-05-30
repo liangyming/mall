@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import Recorder from "recorder-core/recorder.mp3.min";
+import Recorder from "recorder-core/recorder.wav.min";
 import { request } from "@/network/request";
 
 export default {
@@ -16,13 +16,32 @@ export default {
       rec: 0,
       voice: null,
       suc: null,
-      luyin: null
     };
   },
   methods: {
+    sendRec(form) {
+      request({
+        url: "/recorder1",
+        method: 'post',
+        headers: {'Content-Type': 'multipart/form-data'},
+        data: form,
+        responseType: 'blob'    //二进制返回格式
+      }).then(res1 => {
+        this.voice = res1.data
+        request({
+          url: "/recorder2",
+          method: 'post'
+        }).then(res2 => {
+          this.suc = res2.data
+          this.$emit('music', this.voice, this.suc)
+        });
+      }).catch(err1 => {
+        alert(err1)
+      });
+    },
     startRec() {
       var that = this;
-      this.rec = Recorder(); //使用默认配置.mp3格式
+      this.rec = Recorder({type: "wav"}); //默认配置.mp3格式
       //打开麦克风授权获得相关资源
       this.rec.open(
         function() {
@@ -46,31 +65,11 @@ export default {
           // 非常简单的就能拿到blob音频url
           // audio.src = URL.createObjectURL(blob);
           // audio.play();
-          this.luyin = new FormData();
-          this.luyin.append("upfile", blob, "recorder.mp3");
+          var form = new FormData();
+          form.append("up", blob, "recorder.wav");
+          this.sendRec(form)
         },function(msg) {
           alert("录音失败:" + msg);
-      });
-      console.log(this.luyin)
-      request({
-        url: "/recorder1",
-        method: 'post',
-        headers: {'Content-Type': 'multipart/form-data'},
-        data: this.luyin,
-        responseType: 'blob'    //二进制返回格式
-      }).then(res1 => {
-        request({
-          url: "/recorder2",
-          method: 'post'
-        }).then(res2 => {
-          this.suc = res2.data
-          console.log(this.suc)
-        })
-        console.log(this.suc)
-        this.voice = res1.data
-        this.$emit('music', this.voice, this.suc)
-      }).catch(err1 => {
-        alert(err1)
       });
     }
   }
