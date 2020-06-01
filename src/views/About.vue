@@ -32,7 +32,6 @@
 import NavBar from "@/components/NavBar";
 import recorder from "@/components/about/recorder";
 import { request } from "@/network/request";
-import axios from "axios";
 
 export default {
   name: "About",
