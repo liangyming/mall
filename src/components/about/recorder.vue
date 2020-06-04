@@ -55,16 +55,9 @@ export default {
       );
     },
     playRec() {
-      // 停止录音，得到了录音文件blob二进制对象，想干嘛就干嘛
-      let that = this;
+      // 停止录音，得到了录音文件blob二进制对象
       this.rec.stop(
         (blob, duration) => {
-          // var audio = document.createElement("audio");
-          // audio.controls = true;
-          // document.body.appendChild(audio);
-          // 非常简单的就能拿到blob音频url
-          // audio.src = URL.createObjectURL(blob);
-          // audio.play();
           var form = new FormData();
           form.append("up", blob, "recorder.wav");
           this.sendRec(form)
